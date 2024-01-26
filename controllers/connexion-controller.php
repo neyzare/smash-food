@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Récupération des données du formulaire
         $email = htmlspecialchars($_POST['email']);
-        $password = htmlspecialchars($_POST['password']);
+        $password = htmlspecialchars($_POST['motdepasse']);
 
         // Requête SQL pour récupérer l'utilisateur par son email
         $query = $bdd->prepare('SELECT * FROM utilisateurs WHERE email = ?');
@@ -20,14 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $query->fetch(PDO::FETCH_ASSOC);
 
         // Vérification du mot de passe
-        if ($user && password_verify($password, $user['motdepasse'])) {
+        if ($user && password_verify($password, $user['mot_de_passe'])) {
             // L'utilisateur est authentifié avec succès
-            $_SESSION['user_id'] = $user['id']; // Stockez l'ID de l'utilisateur en session
-            header("location: ../views/homepage.php"); // Redirigez vers le tableaux de bord
+            $_SESSION['user_id'] = $user['id'];  // Stockez l'ID de l'utilisateur en session
+            $_SESSION['status'] = $user['connected'];
+            $_SESSION['nom'] = $user['name'];
+            header("location: /index.php"); // Redirigez vers le tableaux de bord
             exit();
         } else {
             // Identifiants incorrects
-            header("location: ../index.php"); // Redirigez vers le tableaux de bord
+            header("location: /views/connexion.php"); // Redirigez vers le tableaux de bord
             exit();
         }
     } catch (PDOException $e) {

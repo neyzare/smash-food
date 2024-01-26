@@ -11,18 +11,16 @@ try {
      // Données à insérer (vous pouvez les récupérer depuis un formulaire, par exemple)
      $nom = htmlspecialchars($_POST['nom']);
      $prenom = htmlspecialchars($_POST['prenom']);
-     $nom_utilisateur = htmlspecialchars($_POST['nomutilisateur']);
      $email = htmlspecialchars($_POST['email']);
      $motdepasse = password_hash(htmlspecialchars($_POST['motdepasse']), PASSWORD_DEFAULT);
      
 
-     $sql = 'INSERT INTO utilisateurs (nom, prenom, nom_utilisateur, email, mot_de_passe) VALUES (:nom, :prenom, :nom_utilisateur, :email, :motdepasse)';
+     $sql = 'INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe) VALUES (:nom, :prenom, :email, :motdepasse)';
      $stmt = $bdd->prepare($sql);
  
      // Bind parameters
      $stmt->bindParam(':nom', $nom);
      $stmt->bindParam(':prenom', $prenom);
-     $stmt->bindParam(':nom_utilisateur', $nom_utilisateur);
      $stmt->bindParam(':email', $email);
      $stmt->bindParam(':motdepasse', $motdepasse);
  

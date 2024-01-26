@@ -19,9 +19,6 @@
             <label for="prenom">Prénom</label>
             <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
 
-            <label for="nomutilisateur">nom utilisateur</label>
-            <input type="text" id="nomutilisateur" name="nomutilisateur" placeholder="nom d'utilisateur" required>
-
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Email" required>
 
