@@ -1,27 +1,43 @@
-// panier.js
+const baseURL = 'http://localhost:8888/phpMyAdmin5'; // Mettez ici l'URL de votre serveur et l'endpoint de votre API
 
-let panier = [];
-
-function ajouterProduit(nom, prix) {
-    panier.push({ nom: nom, prix: prix });
-    afficherPanier();
+// Fonction pour récupérer les éléments du panier depuis le serveur
+async function chargerPanier() {
+    try {
+        const response = await fetch(`${baseURL}/panier`);
+        // Le reste du code reste inchangé...
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-function supprimerProduit(index) {
-    panier.splice(index, 1);
-    afficherPanier();
+// Fonction pour ajouter un élément au panier (côté client et serveur)
+async function ajouterAuPanier(nom, prix) {
+    try {
+        const response = await fetch(`${baseURL}/ajouter-au-panier`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nom: nom, prix: prix })
+        });
+        // Le reste du code reste inchangé...
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-function afficherPanier() {
-    const panierElement = document.getElementById('panier');
-    panierElement.innerHTML = '';
-
-    panier.forEach((produit, index) => {
-        const ligneProduit = document.createElement('div');
-        ligneProduit.innerHTML = `
-            <p>${produit.nom} - ${produit.prix} $</p>
-            <button onclick="supprimerProduit(${index})">Supprimer</button>
-        `;
-        panierElement.appendChild(ligneProduit);
-    });
+// Fonction pour supprimer un élément du panier (côté client et serveur)
+async function supprimerDuPanier(index) {
+    try {
+        const response = await fetch(`${baseURL}/supprimer-du-panier`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ index: index })
+        });
+        // Le reste du code reste inchangé...
+    } catch (error) {
+        console.error(error);
+    }
 }
