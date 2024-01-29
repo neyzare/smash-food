@@ -1,4 +1,8 @@
+<?php
+session_start();
+require './layaout.php';
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,11 +14,7 @@
 </head>
 <body>
     
-    <nav>
-        <a href="/index.php"><h1>Smash-Food</h1></a>
-    </nav>
-
-    <main>
+   
         <form action="/controllers/contact-controller.php" method="post">
             <label for="titre">Titre :</label>
             <input type="text" id="titre" name="titre" required>

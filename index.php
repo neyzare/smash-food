@@ -38,7 +38,6 @@ require './views/layaout.php';
         </div>
       </div>
     </section>
-  
 </main>
 
 <script src="./js/index.js"></script>

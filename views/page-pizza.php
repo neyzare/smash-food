@@ -1,3 +1,9 @@
+<?php
+session_start();
+require './layaout.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,10 +16,10 @@
 <nav >
         <a href="/index.php"><h1>Smash-Food</h1></a>
         <ul class="navigation">
-          <li class="nav-li"><a href="#" class="active nav-link">Inscription</a></li>
-          <li class="nav-li"><a href="#" class="nav-link">Connection</a></li>
-          <li class="nav-li"><a href="#" class="nav-link">Contactez-nous</a></li>
-          <li class="nav-li"><a href="#"  id="bouton-panier" class="nav-link" onclick="afficherPanier()">Panier (0)</a>
+          <li class="nav-li"><a href="/views/inscription.php" class="active nav-link">Inscription</a></li>
+          <li class="nav-li"><a href="/views/connexion.php" class="nav-link">Connection</a></li>
+          <li class="nav-li"><a href="/views/contact.php" class="nav-link">Contactez-nous</a></li>
+          <li class="nav-li"><a href="/views/panier.php"  id="bouton-panier" class="nav-link" onclick="afficherPanier()">Panier (0)</a>
         </ul>
         <div class="btns">
             <a href="#" class="inscription"></a>

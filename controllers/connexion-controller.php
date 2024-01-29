@@ -1,9 +1,7 @@
 <?php
-
-
 session_start();
 
-require_once('../connexion-bdd.php');
+require "../connexion-bdd.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -19,20 +17,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->execute([$email]);
         $user = $query->fetch(PDO::FETCH_ASSOC);
 
-        // Vérification du mot de passe
-        if ($user && password_verify($password, $user['mot_de_passe'])) {
-            // L'utilisateur est authentifié avec succès
-            $_SESSION['user_id'] = $user['id'];  // Stockez l'ID de l'utilisateur en session
-            $_SESSION['status'] = $user['connected'];
-            $_SESSION['nom'] = $user['name'];
-            header("location: /index.php"); // Redirigez vers le tableaux de bord
+        if ($user) {
+            // Vérification du mot de passe pour les utilisateurs
+            if (password_verify($password, $user['mot_de_passe'])) {
+                // L'utilisateur est authentifié avec succès
+                $_SESSION['user_id'] = $user['id'];  // Stockez l'ID de l'utilisateur en session
+                $_SESSION['nom'] = $user['nom'];
+                $_SESSION["status"] = 'user';
+                header("location: /index.php"); // Redirigez vers le tableau de bord
+                exit();
+            } else {
+                // Mot de passe incorrect pour l'utilisateur
+                header("location: /views/connexion.php"); // Redirigez vers le formulaire de connexion
+                exit();
+            }
+        }
+
+        // Requête SQL pour vérifier si l'utilisateur est un administrateur
+        $admin_query = $bdd->prepare("SELECT * FROM administrateurs WHERE email = ?");
+        $admin_query->execute([$email]);
+        $admin = $admin_query->fetch(PDO::FETCH_ASSOC);
+
+        if ($admin && $password === $admin['mot_de_passe']) {
+            // L'administrateur est authentifié avec succès
+            $_SESSION['user_id'] = $admin['id'];  // Stockez l'ID de l'administrateur en session
+            $_SESSION['nom'] = $admin['nom'];
+            $_SESSION["status"] = 'admin';
+            header("location: /index.php"); // Redirigez vers le tableau de bord
             exit();
         } else {
-            // Identifiants incorrects
-            header("location: /views/connexion.php"); // Redirigez vers le tableaux de bord
+            // Mot de passe incorrect pour l'administrateur
+            header("location: /views/connexion.php"); // Redirigez vers le formulaire de connexion
             exit();
         }
     } catch (PDOException $e) {
         die("Erreur de connexion à la base de données : " . $e->getMessage());
     }
 }
+?>
