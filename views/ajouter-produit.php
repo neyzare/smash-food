@@ -1,14 +1,18 @@
 <?php
 session_start();
-include "./layaout.php"
+include "./layaout.php";
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/ajout-produit.css">
     <title>Ajouter un produit</title>
+
 </head>
 <body>
-<h2>Ajouter un produit</h2>
+<main>
 <form action="/controllers/page-produit-controller.php" method="post" enctype="multipart/form-data">
     <label for="categorie">Catégorie:</label>
     <select name="categorie" id="categorie">
@@ -30,7 +34,6 @@ include "./layaout.php"
 
     <input type="submit" value="Ajouter">
 </form>
+</main>
 </body>
 </html>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">

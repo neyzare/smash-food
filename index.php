@@ -16,7 +16,7 @@ require './views/layaout.php';
 
 
 <main>
-  <div class="span-title">Bienvenue sur Smash-Food le premier Site de de burger et de pizza du monde !</div>
+  <div class="span-title">Bienvenue sur Smash-Food le premier Site de burger et de pizza du monde !</div>
     <section class="section1">
       <div class="card">
         <img src="img/burger-homepage.jpeg" alt="" class="card-img-top">
