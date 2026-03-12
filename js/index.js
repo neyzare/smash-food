@@ -1,15 +1,37 @@
-let nombreProduitsDansPanier = 0;
+function ajouterAuPanier(productId, btn) {
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Ajouté ✓';
+    }
 
-function mettreAJourNombreProduits() {
-    const boutonPanier = document.getElementById('boutonPanier');
-    boutonPanier.textContent = `Panier (${nombreProduitsDansPanier})`;
+    fetch('/controllers/ajouter-panier-controller.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            const navBtn = document.getElementById('bouton-panier');
+            if (navBtn) navBtn.textContent = 'Panier (' + data.count + ')';
+            setTimeout(() => {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Ajouter au panier';
+                }
+            }, 1500);
+        } else {
+            if (btn) {
+                btn.disabled = false;
+                btn.textContent = 'Ajouter au panier';
+            }
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = 'Ajouter au panier';
+        }
+    });
 }
-
-function ajouterAuPanier() {
-    // Simuler l'ajout d'un produit au panier
-    nombreProduitsDansPanier++;
-
-    // Mettre à jour l'affichage du nombre de produits dans le panier
-    mettreAJourNombreProduits();
-}
-

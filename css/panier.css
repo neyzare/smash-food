@@ -1,177 +1,163 @@
-/* CSS pour le panier */
-#panier {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
+/* ---- PANIER PAGE ---- */
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-#panier th,
-#panier td {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #ccc;
-    color: white;
+.panier-page {
+  padding: calc(var(--nav-height) + 40px) 48px 80px;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.panier-page h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panier-page h2 span {
+  color: var(--accent);
+}
+
+/* ---- TABLE ---- */
+.table-wrapper {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+#panier {
+  width: 100%;
+  border-collapse: collapse;
 }
 
 #panier th {
-    background-color: var(--accent);
+  background: var(--accent);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 16px 20px;
+  text-align: left;
 }
 
-#panier tbody tr:nth-child(even) {
-    background-color: #1F2937;
+#panier th:last-child {
+  text-align: center;
+}
+
+#panier td {
+  padding: 16px 20px;
+  color: var(--text);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+#panier td:last-child {
+  text-align: center;
+}
+
+#panier tbody tr:last-child td {
+  border-bottom: none;
+}
+
+#panier tbody tr {
+  transition: background 0.2s ease;
+}
+
+#panier tbody tr:hover {
+  background: rgba(244, 92, 54, 0.05);
 }
 
 #panier img {
-    width: 50px;
-    height: auto;
-    border-radius: 4px;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
 }
 
+.prix-cell {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ---- DELETE BUTTON ---- */
 .btn-supprimer {
-    background-color: #ff5252;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
+  background: rgba(255, 82, 82, 0.12);
+  color: #ff7070;
+  border: 1px solid rgba(255, 82, 82, 0.3);
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .btn-supprimer:hover {
-    background-color: #b30000;
+  background: rgba(255, 82, 82, 0.25);
+  border-color: rgba(255, 82, 82, 0.6);
+  transform: translateY(-1px);
 }
 
-/* Ajout des conventions de style de votre page */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-    list-style: none;
-    outline: none;
-    border: none;
-    scroll-behavior: smooth;
+/* ---- EMPTY STATE ---- */
+.panier-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
 }
 
-:root {
-    --accent: rgb(244,92,54);
-    --accent2: rgb(189, 56, 22);
+.panier-empty p {
+  font-size: 1rem;
+  margin-bottom: 20px;
 }
 
-body {
-    background-color: #121827;
+/* ---- TOTAL ---- */
+.panier-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 24px;
+  gap: 16px;
 }
 
-.btn {
-    color: var(--bg);
-    background: var(--accent);
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    border-radius: 7px;
+.panier-total {
+  background: var(--bg2);
+  border: 1px solid rgba(244, 92, 54, 0.3);
+  border-radius: 12px;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.btn:hover {
-    background: var(--accent2);
+.panier-total span {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
-
-
-nav {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 20px;
-    background: var(--bg);
-    background-color: #1F2937;
+.panier-total strong {
+  color: var(--accent);
+  font-size: 1.4rem;
+  font-weight: 800;
 }
 
-nav.active {
-    box-shadow: 0 5px 5px rgba(0,0,0,.2)
-}
-
-nav .logo img {
-    width: 40px;
-}
-
-nav .navigation {
-    display: flex;
-}
-
-nav .navigation li {
-    position: relative;
-}
-
-nav .navigation li .nav-link {
-    color: white;
-}
-
-a {
-    color: white;
-}
-
-nav .navigation a {
-    font-size: 1rem;
-    padding: 10px 20px;
-    font-weight: 500;
-}
-
-nav .navigation a::after,
-nav .navigation a::before {
-    content: "";
-    width: 0%;
-    height: 2px;
-    background: var(--accent);
-    position: absolute;
-    left: 0;
-    transition: width .2s ease-in-out;
-}
-
-nav .navigation a::after {
-    top: -4px;
-}
-
-nav .navigation a::before {
-    bottom: -4px;
-}
-
-nav .navigation a:hover::before,
-nav .navigation a:hover::after,
-nav .navigation a.active::before,
-nav .navigation a.active::after {
-    width: 100%;
-}
-
-#burger-menu {
-    color: var(--text);
-    font-size: 1.6rem;
-    cursor: pointer;
-    z-index: 10001;
-    display: none;
-}
-
-#burger-menu:hover {
-    color: var(--accent);
-}
-
-main {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    align-content: stretch;
-    height: 600px;
-    width: 70%;
-    background-color: #1F2937;
-    margin: 15% auto 0;
-}
-
-.span-title {
-    color: white;
-    text-align: center;
+@media (max-width: 600px) {
+  .panier-page {
+    padding: calc(var(--nav-height) + 20px) 16px 60px;
+  }
 }

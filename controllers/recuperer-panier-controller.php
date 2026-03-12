@@ -1,27 +1,39 @@
 <?php
-session_start();
-include "../connexion-bdd.php";
+if (session_status() === PHP_SESSION_NONE) session_start();
+require "../connexion-bdd.php";
+header('Content-Type: application/json');
+
+if (empty($_SESSION['panier'])) {
+    echo json_encode(['success' => true, 'panier' => []]);
+    exit;
+}
 
 try {
     $bdd = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER, DB_PASSWORD);
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-    echo "Erreur de connexion : " . $e->getMessage();
-}
 
-// Vérifier si un utilisateur est connecté
-if (isset($_SESSION['id_utilisateur'])) {
-    // Un utilisateur est connecté, récupérer les données du panier pour cet utilisateur
-    $stmt_panier = $bdd->prepare("SELECT * FROM panier WHERE id_utilisateur = :id_utilisateur");
-    $stmt_panier->bindParam(':id_utilisateur', $_SESSION['id_utilisateur']);
-    $stmt_panier->execute();
-    $panier = $stmt_panier->fetchAll(PDO::FETCH_ASSOC);
-} else {
-    // Aucun utilisateur n'est connecté, peut-être afficher un message d'erreur ou rediriger vers la page de connexion
-    echo "Aucun utilisateur n'est connecté.";
-}
+    $ids = array_map('intval', $_SESSION['panier']);
+    $uniqueIds = array_unique($ids);
+    $placeholders = implode(',', array_fill(0, count($uniqueIds), '?'));
 
-// Retourner les données du panier au format JSON
-header('Content-Type: application/json');
-echo json_encode($panier);
-?>
+    $stmt = $bdd->prepare("SELECT * FROM produits WHERE id IN ($placeholders)");
+    $stmt->execute(array_values($uniqueIds));
+
+    $map = [];
+    foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $p) {
+        $map[$p['id']] = $p;
+    }
+
+    $panier = [];
+    foreach ($ids as $index => $id) {
+        if (isset($map[$id])) {
+            $item = $map[$id];
+            $item['cart_index'] = $index;
+            $panier[] = $item;
+        }
+    }
+
+    echo json_encode(['success' => true, 'panier' => $panier]);
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+}

@@ -1,37 +1,42 @@
 <?php
 session_start();
 require './layaout.php';
-require '../controllers/page-pizza-controller.php'
-
+require '../controllers/page-pizza-controller.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/page-pizza.css">
-    <title>pizza</title>
+    <title>Pizzas — Smash-Food</title>
 </head>
 <body>
 
-<main>
+<div class="product-page">
+    <div class="page-header">
+        <span class="tag">Notre carte</span>
+        <h2>Nos Pizzas</h2>
+        <p>Des pizzas généreuses cuites au four avec des ingrédients de qualité</p>
+    </div>
 
-    <?php foreach ($pizzas as $pizza) : ?>
-        <div class="card">
-            <img src="/img/<?=$pizza['image']; ?>" alt="" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title"><?php echo $pizza['nom']; ?></h5>
-                <p class="card-text"><?php echo $pizza['description']; ?></p>
-                <p class="card-text">Prix : <?php echo $pizza['prix']; ?> €</p>
-                <a class="btn btn-primary" onclick="ajouterAuPanier(<?php echo $burger['id']; ?>)">ajouter au panier</a>
+    <div class="products-grid">
+        <?php foreach ($pizzas as $pizza) : ?>
+            <div class="card">
+                <img src="/img/<?= $pizza['image']; ?>" alt="<?= htmlspecialchars($pizza['nom']); ?>">
+                <div class="card-body">
+                    <h5 class="card-title"><?= htmlspecialchars($pizza['nom']); ?></h5>
+                    <p class="card-text"><?= htmlspecialchars($pizza['description']); ?></p>
+                    <p class="card-price"><?= $pizza['prix']; ?> €</p>
+                    <button class="btn btn-primary" onclick="ajouterAuPanier(<?= $pizza['id']; ?>, this)">Ajouter au panier</button>
+                </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
+</div>
 
-</main>
-
-<script src="/js/panier.js"></script>
 <script src="/js/index.js"></script>
 </body>
 </html>

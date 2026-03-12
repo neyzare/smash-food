@@ -13,9 +13,7 @@ try {
     $requete->execute([$titre, $message]);
 
     header("location: /views/contact.php");
-     exit();
+    exit();
 } catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
+    die("Erreur : " . $e->getMessage());
 }
-
-?>
