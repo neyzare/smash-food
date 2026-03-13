@@ -13,7 +13,6 @@ if ($fromEnv) {
     $env = parse_ini_file(__DIR__ . '/.env');
 
     if ($env === false) {
-        error_log('[smash-food] Impossible de lire le fichier .env');
         http_response_code(500);
         exit('Une erreur interne est survenue.');
     }
