@@ -15,5 +15,8 @@ try {
     header("location: /views/contact.php");
     exit();
 } catch (PDOException $e) {
-    die("Erreur : " . $e->getMessage());
+    error_log('[smash-food] Erreur contact : ' . $e->getMessage());
+    $_SESSION['flash_error'] = 'Une erreur technique est survenue. Veuillez réessayer.';
+    header('location: /views/contact.php');
+    exit();
 }

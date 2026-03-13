@@ -21,5 +21,8 @@ try {
     header("location: ../index.php");
     exit();
 } catch (PDOException $e) {
-    die("Erreur : " . $e->getMessage());
+    error_log('[smash-food] Erreur inscription : ' . $e->getMessage());
+    $_SESSION['flash_error'] = 'Une erreur technique est survenue. Veuillez réessayer.';
+    header('location: /views/inscription.php');
+    exit();
 }

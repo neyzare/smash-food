@@ -19,6 +19,10 @@ require './layaout.php';
         <h2>Contactez-nous</h2>
         <p class="form-subtitle">Une question ? On vous répond rapidement.</p>
 
+        <?php if (!empty($_SESSION['flash_error'])) : ?>
+            <p class="flash-error"><?= htmlspecialchars($_SESSION['flash_error']); unset($_SESSION['flash_error']); ?></p>
+        <?php endif; ?>
+
         <form action="/controllers/contact-controller.php" method="post">
             <label for="titre">Sujet</label>
             <input type="text" id="titre" name="titre" placeholder="Votre sujet..." required>

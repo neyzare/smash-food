@@ -10,5 +10,5 @@ try {
     $stmt->execute();
     $pizzas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    echo "Erreur : " . $e->getMessage();
+    error_log('[smash-food] Erreur chargement pizzas : ' . $e->getMessage());
 }

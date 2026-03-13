@@ -35,5 +35,6 @@ try {
 
     echo json_encode(['success' => true, 'panier' => $panier]);
 } catch (PDOException $e) {
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    error_log('[smash-food] Erreur récupération panier : ' . $e->getMessage());
+    echo json_encode(['success' => false, 'message' => 'Une erreur technique est survenue.']);
 }

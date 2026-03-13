@@ -18,6 +18,10 @@
         <h2>Connexion</h2>
         <p class="form-subtitle">Ravi de vous revoir ! Entrez vos identifiants.</p>
 
+        <?php if (!empty($_SESSION['flash_error'])) : ?>
+            <p class="flash-error"><?= htmlspecialchars($_SESSION['flash_error']); unset($_SESSION['flash_error']); ?></p>
+        <?php endif; ?>
+
         <form action="/controllers/connexion-controller.php" method="post">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="votre@email.com" required>

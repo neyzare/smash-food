@@ -18,6 +18,10 @@
         <h2>Inscription</h2>
         <p class="form-subtitle">Créez votre compte pour commander.</p>
 
+        <?php if (!empty($_SESSION['flash_error'])) : ?>
+            <p class="flash-error"><?= htmlspecialchars($_SESSION['flash_error']); unset($_SESSION['flash_error']); ?></p>
+        <?php endif; ?>
+
         <form action="/controllers/inscription-controller.php" method="post">
             <label for="nom">Nom</label>
             <input type="text" id="nom" name="nom" placeholder="Dupont" required>

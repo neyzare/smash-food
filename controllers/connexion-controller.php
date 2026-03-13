@@ -38,6 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
 
     } catch (PDOException $e) {
-        die("Erreur de connexion : " . $e->getMessage());
+        error_log('[smash-food] Erreur connexion BDD : ' . $e->getMessage());
+        $_SESSION['flash_error'] = 'Une erreur technique est survenue. Veuillez réessayer.';
+        header('location: /views/connexion.php');
+        exit();
     }
 }
